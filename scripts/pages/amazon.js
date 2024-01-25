@@ -41,7 +41,7 @@ products.forEach((product) => {
 
       <div class="product-spacer"></div>
 
-      <div class="added-to-cart">
+      <div class="added-to-cart added-to-cart-${product.id}">
         <img src="images/icons/checkmark.png">
         Added
       </div>
@@ -92,6 +92,28 @@ document.querySelectorAll(".add-to-cart-button").forEach((button) => {
     });
 
     document.querySelector(".cart-quantity").innerHTML = cartQuantity;
+
+    const addedMessage = document.querySelector(`.added-to-cart-${productId}`);
+
+    addedMessage.classList.add("added-to-cart-visible");
+
+    // Use object to save the timeoutIds
+    // Using object because every products has their own id
+    const addedMessageTimeouts = {};
+
+    // Check if there's previous timeout for the product
+    const previousTimeoutId = addedMessageTimeouts[productId];
+    if (previousTimeoutId) {
+      clearTimeout(previousTimeoutId);
+    }
+
+    // Remove added-to-cart-visible after 2 seconds
+    const timeoutId = setTimeout(() => {
+      addedMessage.classList.remove("added-to-cart-visible");
+    }, 2000);
+
+    // Save the timeoutId for the product
+    addedMessageTimeouts[productId] = timeoutId;
 
     console.log(cart);
   });
