@@ -60,7 +60,7 @@ document.querySelector(".products-grid").innerHTML = productsHTML;
 document.querySelectorAll(".add-to-cart-button").forEach((button) => {
   button.addEventListener("click", () => {
     // Dataset use for taking all the data from the button in the data atribut
-    const productId = button.dataset.productId;
+    const { productId } = button.dataset;
 
     let matchingItem;
 
@@ -80,8 +80,8 @@ document.querySelectorAll(".add-to-cart-button").forEach((button) => {
       matchingItem.quantity += quantity;
     } else {
       cart.push({
-        productId: productId,
-        quantity: quantity,
+        productId,
+        quantity,
       });
     }
 
