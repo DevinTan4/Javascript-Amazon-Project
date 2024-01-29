@@ -1,3 +1,7 @@
+// Import variable cart from cart.js
+// Uses ../../ to go out from 2 folders
+import { cart } from "../../data/cart.js";
+
 let productsHTML = "";
 
 products.forEach((product) => {
