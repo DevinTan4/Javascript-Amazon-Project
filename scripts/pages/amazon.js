@@ -1,6 +1,7 @@
 // Import variable cart from cart.js
 // Uses ../../ to go out from 2 folders
-import { cart } from "../../data/cart.js";
+import { cart, addToCart } from "../../data/cart.js";
+import { products } from "../../data/products.js";
 
 let productsHTML = "";
 
@@ -61,41 +62,26 @@ products.forEach((product) => {
 
 document.querySelector(".products-grid").innerHTML = productsHTML;
 
+// Count cart quantity function
+function countCartQuantity() {
+  let cartQuantity = 0;
+
+  cart.forEach((cartItem) => {
+    cartQuantity += cartItem.quantity;
+  });
+
+  document.querySelector(".cart-quantity").innerHTML = cartQuantity;
+}
+
 document.querySelectorAll(".add-to-cart-button").forEach((button) => {
   button.addEventListener("click", () => {
     // Dataset use for taking all the data from the button in the data atribut
     const { productId } = button.dataset;
+    // Add to cart function
+    addToCart(productId);
 
-    let matchingItem;
-
-    cart.forEach((item) => {
-      if (productId === item.productId) {
-        matchingItem = item;
-      }
-    });
-
-    // Quantity selector
-    const quantitySelector = document.querySelector(
-      `.quantity-selector-${productId}`
-    );
-    const quantity = Number(quantitySelector.value);
-
-    if (matchingItem) {
-      matchingItem.quantity += quantity;
-    } else {
-      cart.push({
-        productId,
-        quantity,
-      });
-    }
-
-    let cartQuantity = 0;
-
-    cart.forEach((item) => {
-      cartQuantity += item.quantity;
-    });
-
-    document.querySelector(".cart-quantity").innerHTML = cartQuantity;
+    // Count cart quantity function
+    countCartQuantity();
 
     const addedMessage = document.querySelector(`.added-to-cart-${productId}`);
 
